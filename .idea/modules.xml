@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Pattern_Locker.iml" filepath="$PROJECT_DIR$/Pattern_Locker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Wireless_Security_Pattern_Lock.iml" filepath="$PROJECT_DIR$/Wireless_Security_Pattern_Lock.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
