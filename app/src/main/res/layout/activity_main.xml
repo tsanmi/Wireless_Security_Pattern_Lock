@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.dimitris_admin.pattern_locker.MainActivity">
+
+
+    <TextView
+        android:textSize="20dp"
+        android:id="@+id/set_name_text"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="30dp"
+        android:text="Set Your Name!" />
+
+    <EditText
+        android:id="@+id/set_name_edit_text"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <TextView
+    android:textSize="20dp"
+    android:id="@+id/set_hand_num"
+    android:layout_width="match_parent"
+    android:layout_height="34dp"
+    android:layout_marginTop="30dp"
+    android:text="Set Your Hand Num!" />
+
+    <EditText
+        android:id="@+id/set_hand_num_text"
+        android:digits="12345"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="" />
+    <TextView
+        android:textSize="20dp"
+        android:id="@+id/set_finger_num"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="30dp"
+        android:text="Set Your Finger Num!" />
+
+    <EditText
+        android:id="@+id/set_finger_num_text"
+        android:digits="12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="" />
+
+
+    <Button
+        android:layout_marginTop="30dp"
+        android:id="@+id/go_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go!" />
+
+
+</LinearLayout>
