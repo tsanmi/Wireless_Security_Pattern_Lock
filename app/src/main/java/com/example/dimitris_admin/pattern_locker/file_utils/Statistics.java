@@ -3,8 +3,14 @@ package com.example.dimitris_admin.pattern_locker.file_utils;
 
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Statistics {
     private String long_runs[]={"123","147","159","258","321","369","357","456","654","741","753","789","852","987","951","963"};
@@ -23,10 +29,179 @@ public class Statistics {
     private ArrayList<String> a_long_L_turns=new ArrayList<String>(Arrays.asList(long_L_turns));
     private ArrayList<String> a_short_L_turns=new ArrayList<String>(Arrays.asList(short_L_turns));
 
-    public Statistics()
-    {}
+    ArrayList<String> sequences=new ArrayList<String>();
+    ArrayList<Integer> statistics=new ArrayList<Integer>();
 
-}
+    private int long_run,u_turn,long_u_turn,long_v_turn,short_v_turn,long_L_turn,short_L_turn;
+
+    private File meta_file;
+    private HashMap h_m;
+
+
+
+    public   Statistics(File f)
+    {
+        meta_file=f;
+
+    }
+
+    private void read_metadata()
+    {   BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
+        String[] metrics = null;
+
+
+
+
+
+
+
+        try {
+
+            br = new BufferedReader(new FileReader(this.meta_file));
+
+            //skip line
+            //wste na min diabazontai ta headers
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                // use comma as separator
+
+
+                metrics = line.split(cvsSplitBy);
+                Log.d("IO message:", "Attempt: "+metrics[1]+" sequence: "+metrics[2]);
+               sequences.add(metrics[2]);
+
+
+
+
+
+            }
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+    }
+
+    public ArrayList<Integer> generate_Statistics()
+    {this.read_metadata();
+
+    //gia kathe sequence sto metadata file
+     //elegxoume an periexei kapoia seira apo xaraxtires
+        //pou exoume arxikopoiisei pio panw
+        //an to sequence perixei kapoia akolouthia
+        //auksanete o antistoixos metritis
+        //telos epistrefete i arraylit me to sunoliko apotelesma
+
+
+    for(int i=0;i<sequences.size();i++) {
+
+
+        String S = sequences.get(i);
+
+        for(int a=0;a<a_long_runs.size();a++)
+        {
+            String S2=a_long_runs.get(a);
+
+            if(S.contains(S2))
+        {long_run++;}
+
+        }
+
+        for(int a=0;a<a_u_turns.size();a++)
+        {
+            String S2=a_u_turns.get(a);
+
+            if(S.contains(S2))
+            {u_turn++;}
+
+        }
+
+        for(int a=0;a<a_long_u_turns.size();a++)
+        {
+            String S2=a_long_u_turns.get(a);
+
+            if(S.contains(S2))
+            {long_u_turn++;}
+
+        }
+        for(int a=0;a< a_long_v_turns.size();a++)
+        {
+            String S2= a_long_v_turns.get(a);
+
+            if(S.contains(S2))
+            {long_v_turn++;}
+
+        }
+        for(int a=0;a< a_long_v_turns.size();a++)
+        {
+            String S2= a_long_v_turns.get(a);
+
+            if(S.contains(S2))
+            {long_v_turn++;}
+
+        }
+        for(int a=0;a< a_short_v_turns.size();a++)
+        {
+            String S2= a_short_v_turns.get(a);
+
+            if(S.contains(S2))
+            {short_v_turn++;}
+
+        }
+        for(int a=0;a< a_long_L_turns.size();a++)
+        {
+            String S2= a_long_L_turns.get(a);
+
+            if(S.contains(S2))
+            {long_L_turn++;}
+
+        }
+
+        for(int a=0;a< a_short_L_turns.size();a++)
+        {
+            String S2= a_short_L_turns.get(a);
+
+            if(S.contains(S2))
+            {long_L_turn++;}
+
+        }
+        }
+
+        statistics.add(long_run);
+        statistics.add(u_turn);
+        statistics.add(long_u_turn);
+        statistics.add(long_v_turn);
+        statistics.add(short_v_turn);
+        statistics.add(long_L_turn);
+        statistics.add(short_L_turn);
+        return statistics;
+
+
+
+
+
+    }
+
+    }
+
+
+
+
+
 
 
 

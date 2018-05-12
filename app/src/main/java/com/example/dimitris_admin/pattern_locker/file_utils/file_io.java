@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+
 public class file_io {
     private static final String COMMA_DELIMITER = "; ";
     private static final String NEW_LINE_SEPARATOR = "\n";
@@ -41,6 +42,7 @@ public class file_io {
     private String first_button, second_button, t1,p1,p2, t2, x1, y1, x2, y2, time, A_C_X, A_C_Y, B_C_X, B_C_Y, eu_d, speed_a_b;
     private ArrayList<Float> pointsx = new ArrayList<Float>();
     private ArrayList<Float> pointsy = new ArrayList<Float>();
+  private  ArrayList<Integer> statistics=new ArrayList<Integer>();
     private ArrayList<Float> pressure = new ArrayList<Float>();
     private String avg_pres;
     private int attempt_number;
@@ -124,83 +126,76 @@ public class file_io {
         HashMap map = new HashMap();
         map = PatternLockUtils.getMap(patternLockView);
         ArrayList<Float> spots = new ArrayList<Float>();
-        ArrayList<String> statistics=new ArrayList<String>();
+
 
         this.patternLockView = patternLockView;
 
-        try {
 
-            br = new BufferedReader(new FileReader(this.raw_file));
+            try {
 
-            //skip line
-            //wste na min diabazontai ta headers
-            br.readLine();
-            while ((line = br.readLine()) != null) {
-                // use comma as separator
+                br = new BufferedReader(new FileReader(this.raw_file));
 
-                //an to metrics einai null
-                //pare tin prwti grammmi
-                //kai these ta arxika
+                //skip line
+                //wste na min diabazontai ta headers
+                br.readLine();
+                while ((line = br.readLine()) != null) {
+                    // use comma as separator
 
-                if (metrics == null) {
-                    metrics = line.split(cvsSplitBy);
+                    //an to metrics einai null
+                    //pare tin prwti grammmi
+                    //kai these ta arxika
+
+                    if (metrics == null) {
+                        metrics = line.split(cvsSplitBy);
+
+
+                    }
+                    //an oxi to first tha einai ta proigoume
+                    //apo ton pinaka metrics
+                    else {
+
+                        first_button = metrics[0];
+                        t1 = metrics[1];
+                        x1 = metrics[2];
+
+
+                        y1 = metrics[3];
+                        p1=metrics[4];
+
+                        spots = (ArrayList) map.get(Integer.valueOf(first_button));
+                        A_C_X = String.valueOf(spots.get(0));
+                        A_C_Y = String.valueOf(spots.get(1));
+
+                        //pairnoume tin nea grammi
+                        //kai thetoume ta epomena
+                        metrics = line.split(cvsSplitBy);
+                        second_button = metrics[0];
+                        t2 = metrics[1];
+                        x2 = metrics[2];
+
+                        y2 = metrics[3];
+                        p2=metrics[4];
+                        this.calc_time(t1, t2);
+                        spots = (ArrayList) map.get(Integer.valueOf(second_button));
+
+                        B_C_X = String.valueOf(spots.get(0));
+                        B_C_Y = String.valueOf(spots.get(1));
+
+                        calc_Eucl_Distance();
+                        find_averege_press();
+
+
+
+
+
+                        this.Save_Pair_Metadata(s);
+
+
+                    }
+
 
 
                 }
-                //an oxi to first tha einai ta proigoume
-                //apo ton pinaka metrics
-                else {
-
-                    first_button = metrics[0];
-                    t1 = metrics[1];
-                    x1 = metrics[2];
-
-
-                    y1 = metrics[3];
-                    p1=metrics[4];
-
-                    spots = (ArrayList) map.get(Integer.valueOf(first_button));
-                    A_C_X = String.valueOf(spots.get(0));
-                    A_C_Y = String.valueOf(spots.get(1));
-
-                    //pairnoume tin nea grammi
-                    //kai thetoume ta epomena
-                    metrics = line.split(cvsSplitBy);
-                    second_button = metrics[0];
-                    t2 = metrics[1];
-                    x2 = metrics[2];
-
-                    y2 = metrics[3];
-                    p2=metrics[4];
-                    this.calc_time(t1, t2);
-                    spots = (ArrayList) map.get(Integer.valueOf(second_button));
-
-                    B_C_X = String.valueOf(spots.get(0));
-                    B_C_Y = String.valueOf(spots.get(1));
-
-                    calc_Eucl_Distance();
-                    find_averege_press();
-
-
-
-                  //  statistics.add(first_button+","+second_button+","+A_C_X+","+A_C_Y+","+B_C_X+","+B_C_Y);
-
-                    this.Save_Pair_Metadata(s);
-
-
-                }
-
-
-
-            }
-            for(int i=0;i<statistics.size();i++)
-            {Log.d("File I/O",statistics.get(i));}
-
-            Statistics a=new Statistics(statistics);
-
-
-            a.generate_statistics();
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -217,6 +212,8 @@ public class file_io {
         }
 
     }
+
+
     //methodos i opoia apothikeuei ta stoixeia gia to pai metadata
 
     public void Save_Pair_Metadata(String s) {
@@ -296,18 +293,17 @@ public class file_io {
 
     }
 
-    public void delete_user_file()
-    {
+    //an apotixei sto check twn triwn sbise ta arxiea wste na ta ksanabalei
 
-        try {
-            this.user_file.delete();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
+    public  void delete_user()
+    {this.deleteRecursive(user_file);}
 
-        }
+   public void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+                deleteRecursive(child);
 
+        fileOrDirectory.delete();
     }
 
 
@@ -485,6 +481,9 @@ public class file_io {
             fw.append(NEW_LINE_SEPARATOR);
 
 
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -499,6 +498,11 @@ public class file_io {
         }
 
     }
+
+
+
+
+
     //methodos gia upologismo tis eukleidias apostasis
     public void calc_Eucl_Distance()
     {
@@ -611,6 +615,12 @@ public class file_io {
 
         avg_pres=String.valueOf(sum/pressure.size());
 
+    }
+    public ArrayList<Integer> generate_Statistics()
+    {
+        Statistics st=new Statistics(this.metadata_file);
+        statistics=st.generate_Statistics();
+        return statistics;
     }
 }
 

@@ -58,8 +58,8 @@ public class Locker extends AppCompatActivity implements SensorEventListener{
      private ArrayList<Float> Ypoints=new ArrayList<>();
     private ArrayList<String> Sensor_Readings=new ArrayList<>();
     private ArrayList<String> Raw_Pat=new ArrayList<>();
-    private HashMap mapxpoints=new HashMap();
-    private HashMap mapypoints=new HashMap();
+    private ArrayList<Integer> statistics=new ArrayList<Integer>();
+
 
     private file_io file;
     private String user_name,hand_n,finger_n,m_p,l_p;
@@ -247,6 +247,7 @@ public class Locker extends AppCompatActivity implements SensorEventListener{
                                 count26=1;
                                 paterns10.clear();
                                 paterns26.clear();
+                                file.delete_user();
                                 finish();
 
                             }
@@ -292,6 +293,7 @@ public class Locker extends AppCompatActivity implements SensorEventListener{
                             String pat_len=String.valueOf(pattern.size());
                             String t_t_c=String.valueOf(PatternLockUtils.getTime(mPatternLockView));
                             file.Save_Metadata(String.valueOf(count26),my_pat,pat_len,t_t_c,eucl_distance,avg_sp,avg_pre,m_p,l_p,hand_n,finger_n);
+
                             Toast.makeText(Locker.this, "You have enterned the : "+(count26)+"patern", Toast.LENGTH_SHORT).show();
 
 
@@ -316,7 +318,11 @@ public class Locker extends AppCompatActivity implements SensorEventListener{
 
                 else
                 { Toast.makeText(Locker.this, "Finished!", Toast.LENGTH_SHORT).show();
+                    statistics=file.generate_Statistics();
                     Results.setVisibility(Results.VISIBLE);
+
+
+
 
                    }
 
@@ -409,6 +415,16 @@ public class Locker extends AppCompatActivity implements SensorEventListener{
 
             }
         });
+        Results.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Locker-Results","Long runs: "+statistics.get(0)+"\nU turns: "+statistics.get(1)
+                +"\nLong u turns: "+statistics.get(2)+"\nLong v turns: "+statistics.get(3)
+                +"\nShort v turns: "+statistics.get(4)+"\nLong L turns: "+statistics.get(5)
+                +"\nShort L turns: "+statistics.get(6));
+            }
+        });
+
 
     }
 
