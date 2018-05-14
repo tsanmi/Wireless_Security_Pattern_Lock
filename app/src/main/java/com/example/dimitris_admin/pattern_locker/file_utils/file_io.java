@@ -42,11 +42,12 @@ public class file_io {
     private String first_button, second_button, t1,p1,p2, t2, x1, y1, x2, y2, time, A_C_X, A_C_Y, B_C_X, B_C_Y, eu_d, speed_a_b;
     private ArrayList<Float> pointsx = new ArrayList<Float>();
     private ArrayList<Float> pointsy = new ArrayList<Float>();
-  private  ArrayList<Integer> statistics=new ArrayList<Integer>();
+  private  HashMap statistics=new HashMap<>();
     private ArrayList<Float> pressure = new ArrayList<Float>();
     private String avg_pres;
     private int attempt_number;
     private PatternLockView patternLockView;
+    Statistics st;
 
     public file_io(String name, File f) {
         this.user_name = name;
@@ -545,6 +546,11 @@ public class file_io {
 
 
     }
+   public ArrayList get_number_list()
+    {ArrayList list=new ArrayList();
+    list=st.get_number_metrics();
+    return list;
+    }
     //methodos i opoia briskei ta simeia x anamesa omws sta duo koumpia pou anaferontai sto pair metadata arxeio
 
     public void find_arraysX() {
@@ -616,9 +622,9 @@ public class file_io {
         avg_pres=String.valueOf(sum/pressure.size());
 
     }
-    public ArrayList<Integer> generate_Statistics()
+    public HashMap generate_Statistics()
     {
-        Statistics st=new Statistics(this.metadata_file);
+        st=new Statistics(this.metadata_file);
         statistics=st.generate_Statistics();
         return statistics;
     }

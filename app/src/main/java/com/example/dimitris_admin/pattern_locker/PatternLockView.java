@@ -1213,13 +1213,9 @@ public class PatternLockView extends View {
             count++;
 
 
-
             }
 
         }
-
-
-
         return map;
     }
     //pairnoume ta simeia pou

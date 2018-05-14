@@ -21,6 +21,7 @@ import android.view.View;
 
 import android.widget.Button;
 
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.dimitris_admin.pattern_locker.listener.*;
@@ -54,11 +55,12 @@ public class Locker extends AppCompatActivity implements SensorEventListener{
     private String my_pat="";
 
 
+
     private ArrayList<Float> Xpoints=new ArrayList<>();
      private ArrayList<Float> Ypoints=new ArrayList<>();
     private ArrayList<String> Sensor_Readings=new ArrayList<>();
     private ArrayList<String> Raw_Pat=new ArrayList<>();
-    private ArrayList<Integer> statistics=new ArrayList<Integer>();
+    private HashMap statistics=new HashMap();
 
 
     private file_io file;
@@ -418,10 +420,31 @@ public class Locker extends AppCompatActivity implements SensorEventListener{
         Results.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Locker-Results","Long runs: "+statistics.get(0)+"\nU turns: "+statistics.get(1)
-                +"\nLong u turns: "+statistics.get(2)+"\nLong v turns: "+statistics.get(3)
-                +"\nShort v turns: "+statistics.get(4)+"\nLong L turns: "+statistics.get(5)
-                +"\nShort L turns: "+statistics.get(6));
+
+                //pairnoume to epistrefomeno hash map
+                //kai gia kathe try tou xristi emfanizoume
+                //ta stoixeia tis kathe arraylist
+                for(int i=0;i<statistics.size();i++)
+                {
+                    ArrayList<Integer> st=new ArrayList<Integer>();
+
+                    st=(ArrayList)statistics.get(i);
+
+                    Log.d("Locker-Results",(i+1)+" Try: "+"\nLong runs: "+st.get(0)+"\nU turns: "+st.get(1)
+                            +"\nLong u turns: "+st.get(2)+"\nLong v turns: "+st.get(3)
+                            +"\nShort v turns: "+st.get(4)+"\nLong L turns: "+st.get(5)
+                            +"\nShort L turns: "+st.get(6));
+
+                }
+                ArrayList list=new ArrayList();
+                list=file.get_number_list();
+                for(int i=0;i<list.size();i++)
+                {
+                    Log.d("Statistics","Pososto: "+(1+i)+" "+list.get(i)+"%");
+
+                }
+
+
             }
         });
 

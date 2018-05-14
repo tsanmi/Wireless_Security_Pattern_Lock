@@ -31,11 +31,14 @@ public class Statistics {
 
     ArrayList<String> sequences=new ArrayList<String>();
     ArrayList<Integer> statistics=new ArrayList<Integer>();
+    HashMap stat_map=new HashMap();
 
     private int long_run,u_turn,long_u_turn,long_v_turn,short_v_turn,long_L_turn,short_L_turn;
 
     private File meta_file;
     private HashMap h_m;
+    private int sum_leng=1;
+    private int count1,count2,count3,count4,count5,count6,count7,count8,count9;
 
 
 
@@ -70,6 +73,7 @@ public class Statistics {
 
                 metrics = line.split(cvsSplitBy);
                 Log.d("IO message:", "Attempt: "+metrics[1]+" sequence: "+metrics[2]);
+                sum_leng=sum_leng+Integer.valueOf(metrics[3].trim());
                sequences.add(metrics[2]);
 
 
@@ -96,7 +100,7 @@ public class Statistics {
 
     }
 
-    public ArrayList<Integer> generate_Statistics()
+    public HashMap generate_Statistics()
     {this.read_metadata();
 
     //gia kathe sequence sto metadata file
@@ -104,13 +108,33 @@ public class Statistics {
         //pou exoume arxikopoiisei pio panw
         //an to sequence perixei kapoia akolouthia
         //auksanete o antistoixos metritis
-        //telos epistrefete i arraylit me to sunoliko apotelesma
+        //telos epistrefete i arraylist me to sunoliko apotelesma
 
 
     for(int i=0;i<sequences.size();i++) {
 
 
         String S = sequences.get(i);
+        if (sequences.contains("1"))
+        {count1++;}
+        if (sequences.contains("2"))
+        {count2++;}
+        if (sequences.contains("3"))
+        {count3++;}
+        if (sequences.contains("4"))
+        {count4++;}
+        if (sequences.contains("5"))
+        {count5++;}
+        if (sequences.contains("6"))
+        {count6++;}
+
+        if (sequences.contains("7"))
+        {count7++;}
+        if (sequences.contains("8"))
+        {count8++;}
+        if (sequences.contains("9"))
+        {count9++;}
+
 
         for(int a=0;a<a_long_runs.size();a++)
         {
@@ -176,11 +200,9 @@ public class Statistics {
             String S2= a_short_L_turns.get(a);
 
             if(S.contains(S2))
-            {long_L_turn++;}
+            {short_L_turn++;}
 
-        }
-        }
-
+    }
         statistics.add(long_run);
         statistics.add(u_turn);
         statistics.add(long_u_turn);
@@ -188,12 +210,38 @@ public class Statistics {
         statistics.add(short_v_turn);
         statistics.add(long_L_turn);
         statistics.add(short_L_turn);
-        return statistics;
+
+        stat_map.put(i,statistics);
+
+
+        }
+
+
+
+        return stat_map;
 
 
 
 
 
+    }
+    public ArrayList get_number_metrics()
+    {
+         ArrayList list=new ArrayList<>();
+
+    Log.d("Statistics","Sum "+sum_leng+" counter1: "+count1);
+
+         list.add((float)(count1/sum_leng)*100);
+        list.add((float)(count2/sum_leng)*100);
+        list.add((float)(count3/sum_leng)*100);
+        list.add((float)(count4/sum_leng)*100);
+        list.add((float)(count5/sum_leng)*100);
+        list.add((float)(count6/sum_leng)*100);
+        list.add((float)(count7/sum_leng)*100);
+        list.add((float)(count8/sum_leng)*100);
+        list.add((float)(count9/sum_leng)*100);
+
+return list;
     }
 
     }
