@@ -115,24 +115,24 @@ public class Statistics {
 
 
         String S = sequences.get(i);
-        if (sequences.contains("1"))
+        if (S.contains("1"))
         {count1++;}
-        if (sequences.contains("2"))
+        if (S.contains("2"))
         {count2++;}
-        if (sequences.contains("3"))
+        if (S.contains("3"))
         {count3++;}
-        if (sequences.contains("4"))
+        if (S.contains("4"))
         {count4++;}
-        if (sequences.contains("5"))
+        if (S.contains("5"))
         {count5++;}
-        if (sequences.contains("6"))
+        if (S.contains("6"))
         {count6++;}
 
-        if (sequences.contains("7"))
+        if (S.contains("7"))
         {count7++;}
-        if (sequences.contains("8"))
+        if (S.contains("8"))
         {count8++;}
-        if (sequences.contains("9"))
+        if (S.contains("9"))
         {count9++;}
 
 
@@ -230,16 +230,16 @@ public class Statistics {
          ArrayList list=new ArrayList<>();
 
     Log.d("Statistics","Sum "+sum_leng+" counter1: "+count1);
-
-         list.add((float)(count1/sum_leng)*100);
-        list.add((float)(count2/sum_leng)*100);
-        list.add((float)(count3/sum_leng)*100);
-        list.add((float)(count4/sum_leng)*100);
-        list.add((float)(count5/sum_leng)*100);
-        list.add((float)(count6/sum_leng)*100);
-        list.add((float)(count7/sum_leng)*100);
-        list.add((float)(count8/sum_leng)*100);
-        list.add((float)(count9/sum_leng)*100);
+        Log.d("Statistics","Div: "+(double)count1/sum_leng);
+         list.add(((double)count1/sum_leng)*100);
+        list.add(((double)count2/sum_leng)*100);
+        list.add(((double)count3/sum_leng)*100);
+        list.add(((double)count4/sum_leng)*100);
+        list.add(((double)count5/sum_leng)*100);
+        list.add(((double)count6/sum_leng)*100);
+        list.add(((double)count7/sum_leng)*100);
+        list.add(((double)count8/sum_leng)*100);
+        list.add(((double)count9/sum_leng)*100);
 
 return list;
     }
